@@ -30,3 +30,5 @@ application-local.yml
 application-test-local.yml
 log4j2-local.xml
 log.jks
+
+application.properties
