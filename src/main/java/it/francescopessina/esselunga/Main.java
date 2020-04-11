@@ -2,14 +2,13 @@ package it.francescopessina.esselunga;
 
 import com.sun.mail.smtp.SMTPTransport;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -21,7 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,15 +31,15 @@ public class Main {
   private static WebDriver driver;
 
   // Secrets
-  private static final String ESSELUNGA_USERNAME = "<ESSELUNGA USERNAME>";
-  private static final String ESSELUNGA_PASSWORD = "<ESSELUNGA PASSWORD>";
-  private static final String MAIL_USERNAME = "<EMAIL ACCOUNT>";
-  private static final String MAIL_PASSWORD = "<EMAIL PASSWORD>";
+  private static String ESSELUNGA_USERNAME = "<ESSELUNGA USERNAME>";
+  private static String ESSELUNGA_PASSWORD = "<ESSELUNGA PASSWORD>";
+  private static String MAIL_USERNAME = "<EMAIL ACCOUNT>";
+  private static String MAIL_PASSWORD = "<EMAIL PASSWORD>";
 
   // Mail settings
-  private static final String SMTP_SERVER = "smtp.gmail.com";
-  private static final String EMAIL_FROM = "<SENDER EMAIL>";
-  private static final String EMAIL_TO = "<RECIPIENT EMAIL>";
+  private static String SMTP_SERVER = "smtp.gmail.com";
+  private static String EMAIL_FROM = "<SENDER EMAIL>";
+  private static String EMAIL_TO = "<RECIPIENT EMAIL>";
   private static final String EMAIL_TO_CC = "";
   private static final String EMAIL_SUBJECT = "Slot Esselunga disponibili!!!";
   private static final String EMAIL_TEXT = "I seguenti slot sono disponibili! <br><br>";
@@ -50,12 +48,35 @@ public class Main {
   private static final int MAX_WAIT_TIME_SECONDS = 300;
 
   public static void main(String args[]) {
+    readProperties();
     driver = new ChromeDriver();
     checkSlotAvailability();
     driver.close();
   }
 
+  private static void readProperties() {
+
+    try (InputStream input = Main.class.getClassLoader().getResourceAsStream("application.properties")) {
+      Properties prop = new Properties();
+      // load a properties file
+      prop.load(input);
+      // get the property value and print it out
+      ESSELUNGA_USERNAME = prop.getProperty("esselunga.username");
+      ESSELUNGA_PASSWORD = prop.getProperty("esselunga.password");
+      SMTP_SERVER = prop.getProperty("mail.smtp");
+      MAIL_USERNAME = prop.getProperty("mail.username");
+      MAIL_PASSWORD = prop.getProperty("mail.password");
+      EMAIL_FROM = prop.getProperty("mail.from");
+      EMAIL_TO = prop.getProperty("mail.to");
+    } catch (IOException ex) {
+      ex.printStackTrace();
+      System.exit(0);
+    }
+
+  }
+
   public static void checkSlotAvailability() {
+
     driver.get("https://www.esselungaacasa.it/ecommerce/nav/welcome/index.html");
     driver.manage().window().setSize(new Dimension(1600, 860));
     driver.findElement(By.linkText("Accedi")).click();
