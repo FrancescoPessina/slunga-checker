@@ -1,0 +1,8 @@
+{
+  "modules": [
+    {
+      "name": "SeleniumEsselungaMaven",
+      "languageLevel": 8
+    }
+  ]
+}

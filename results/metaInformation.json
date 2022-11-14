@@ -1,0 +1,18 @@
+{
+  "total": 3,
+  "tools inspection": {
+    "Code Inspection": 3
+  },
+  "attributes": {
+    "vcs": {
+      "sarifIdea": {
+        "repositoryUri": "https://github.com/FrancescoPessina/slunga-checker",
+        "revisionId": "d4e53f0ea67e07b0f752bac328eead818bff6693",
+        "branch": "master"
+      }
+    },
+    "deviceId": "200820300000000-b31a-92c2-b42f-9d170b68a176",
+    "jobUrl": "https://github.com/FrancescoPessina/slunga-checker/actions/runs/3462909996",
+    "repoUrl": "https://github.com/FrancescoPessina/slunga-checker"
+  }
+}

@@ -1,0 +1,85 @@
+{"version":"3","listProblem":[{
+  "tool": "Code Inspection",
+  "category": "Code maturity",
+  "type": "Call to 'printStackTrace()'",
+  "severity": "High",
+  "comment": "Call to 'printStackTrace()' should probably be replaced with more robust logging",
+  "detailsInfo": "Reports calls to `Throwable.printStackTrace()` without arguments.\n\nSuch statements are often used for temporary debugging and should be either removed from the production code\nor replaced with a more robust logging facility.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/it/francescopessina/esselunga/Main.java",
+      "language": "JAVA",
+      "line": 154,
+      "offset": 9,
+      "length": 15,
+      "code": {
+        "startLine": 152,
+        "length": 15,
+        "offset": 62,
+        "surroundingCode": "      t.close();\n    } catch (MessagingException e) {\n      e.printStackTrace();\n    }\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "SeleniumEsselungaMaven",
+    "inspectionName": "ThrowablePrintStackTrace"
+  },
+  "hash": "05a2ed5fa11f0726788b7394c32dbfaae9a0b5a7f3f49661e468602c967b123d"
+},{
+  "tool": "Code Inspection",
+  "category": "Code maturity",
+  "type": "Call to 'printStackTrace()'",
+  "severity": "High",
+  "comment": "Call to 'printStackTrace()' should probably be replaced with more robust logging",
+  "detailsInfo": "Reports calls to `Throwable.printStackTrace()` without arguments.\n\nSuch statements are often used for temporary debugging and should be either removed from the production code\nor replaced with a more robust logging facility.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/it/francescopessina/esselunga/Main.java",
+      "language": "JAVA",
+      "line": 72,
+      "offset": 10,
+      "length": 15,
+      "code": {
+        "startLine": 70,
+        "length": 15,
+        "offset": 86,
+        "surroundingCode": "      EMAIL_TO = prop.getProperty(\"mail.to\");\n    } catch (IOException ex) {\n      ex.printStackTrace();\n      System.exit(0);\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "SeleniumEsselungaMaven",
+    "inspectionName": "ThrowablePrintStackTrace"
+  },
+  "hash": "151addc0aaad5ca9f39cb04326ddbb7cbe064c3378244235ffaaf6ba37f51a9d"
+},{
+  "tool": "Code Inspection",
+  "category": "Performance",
+  "type": "String concatenation in loop",
+  "severity": "High",
+  "comment": "String concatenation '+=' in loop",
+  "detailsInfo": "Reports String concatenation in loops.\n\n\nAs every String concatenation copies the whole\nstring, usually it is preferable to replace it with explicit calls to `StringBuilder.append()` or\n`StringBuffer.append()`.\n\n**Example:**\n\n\n      String str = \"\";\n      for(int i=0; i<10; i++) {\n        str += i;\n      }\n\nAfter the quick-fix is applied:\n\n\n      String str = \"\";\n      StringBuilder strBuilder = new StringBuilder(str);\n      for(int i = 0; i<10; i++) {\n        strBuilder.append(i);\n      }\n      str = strBuilder.toString();\n\n\nSometimes, the quick-fixes allow you to convert a `String` variable to a `StringBuilder` or\nintroduce a new `StringBuilder`. Be careful if the original code specially handles the `null` value, as the\nreplacement may change semantics. If `null` is possible, null-safe fixes that generate\nnecessary null-checks are suggested. Also, it's not guaranteed that the automatic replacement will always be more performant.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/it/francescopessina/esselunga/Main.java",
+      "language": "JAVA",
+      "line": 143,
+      "offset": 14,
+      "length": 2,
+      "code": {
+        "startLine": 141,
+        "length": 2,
+        "offset": 83,
+        "surroundingCode": "      String text = EMAIL_TEXT;\n      for (String slot : freeSlots) {\n        text += slot + \"<br>\";\n      }\n      msg.setDataHandler(new DataHandler(new HTMLDataSource(text)));"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "SeleniumEsselungaMaven",
+    "inspectionName": "StringConcatenationInLoops"
+  },
+  "hash": "cc37c0857f9ac355e85e1310eedd5a7881bbc95fe5b2c9d9d697ed7f312e772d"
+}]}
